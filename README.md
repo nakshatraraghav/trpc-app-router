@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js 14 Application with tRPC and App Router
+
+## Overview
+
+Welcome to the Next.js 14 application leveraging the power of tRPC and the App Router. This application demonstrates the integration of tRPC on the App Router, utilizing React Query for enhanced data fetching.
+
+## tRPC Integration
+
+This application demonstrates the implementation of tRPC on the App Router using React Query. The combination allows for efficient and declarative data fetching.
+
+## React Query Version
+
+Note that this project intentionally uses React Query v4 because tRPC currently does not support the newer v5.
+
+### Technologies Used
+
+- Next.js 14
+- tRPC (v10)
+- React Query (v4)
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to get the project up and running on your local machine:
+
+1. Clone the Repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/trpc-app-router.git
+cd trpc-app-router
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install Dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# npm
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#yarn
+yarn install
 
-## Learn More
+# pnpm
+pnpm install
 
-To learn more about Next.js, take a look at the following resources:
+# bun
+bun install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Start a local postgres database (optionally using the docker-compose provided)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+sudo systemctl start docker.service
+cd docker && sudo docker-compose up -d
+```
 
-## Deploy on Vercel
+4. Migrate the database
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# run migrations on the database
+pnpm prisma db push && prisma generate
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+5. Run the application
+
+```bash
+pnpm run dev
+```
+
+## Project Structure
+
+```bash
+├── docker
+│   └── docker-compose.yml
+├── next.config.js
+├── next-env.d.ts
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.js
+├── prisma
+│   └── schema.prisma
+├── public
+│   ├── next.svg
+│   └── vercel.svg
+├── README.md
+├── src
+│   ├── app
+│   │   ├── api
+│   │   │   └── trpc
+│   │   │       └── [trpc]
+│   │   │           └── route.ts
+│   │   ├── favicon.ico
+│   │   ├── layout.tsx
+│   │   └── (root)
+│   │       └── page.tsx
+│   ├── components
+│   │   ├── providers
+│   │   │   └── trpc-provider.tsx
+│   │   └── todos
+│   │       └── todo-list.tsx
+│   ├── lib
+│   │   └── trpc
+│   │       └── trpc-client.ts
+│   ├── server
+│   │   ├── db
+│   │   │   └── prisma.ts
+│   │   └── trpc
+│   │       ├── router.ts
+│   │       ├── routes
+│   │       │   └── todo.ts
+│   │       └── trpc.ts
+│   └── styles
+│       └── globals.css
+├── tailwind.config.ts
+└── tsconfig.json
+```
+
+## Usage
+
+Feel free to adapt and extend this project for your own needs. Leverage the tRPC integration, React Query setup, and App Router for building robust and efficient Next.js applications.
+
+## Contributing
+
+If you'd like to contribute to this project, please follow the standard GitHub fork and pull request workflow. Your contributions are greatly appreciated!
+
+## License
+
+This project is licensed under the MIT License. Feel free to use and modify it for your own purposes.
